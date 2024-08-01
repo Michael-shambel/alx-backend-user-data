@@ -11,7 +11,7 @@ PII_FIELDS = ('email', 'password', 'ssn', 'phone', 'address')
 
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
-    pattern = f"({'|'.join(fields)})=[^{separator}]*"
+    pattern = '|'.join(f'{field}=[^;]*' for field in fields)
     sub_str = re.sub(pattern, lambda m:
                      f"{m.group().split('=')[0]}={redaction}", message)
     return sub_str
