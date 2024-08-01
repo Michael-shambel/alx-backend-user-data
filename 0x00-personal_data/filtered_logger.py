@@ -7,6 +7,14 @@ from typing import List
 import logging
 
 
+def filter_datum(fields: List[str], redaction: str,
+                 message: str, separator: str) -> str:
+    pattern = f"({'|'.join(fields)})=[^{separator}]*"
+    sub_str = re.sub(pattern, lambda m:
+                     f"{m.group().split('=')[0]}={redaction}", message)
+    return sub_str
+
+
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
         """
@@ -15,14 +23,10 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self):
+    def __init__(self, fields: List[str]):
         super(RedactingFormatter, self).__init__(self.FORMAT)
+        self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
-        NotImplementedError
-
-
-def filter_datum(fields: List[str], redaction: str,
-                 message: str, separator: str) -> str:
-    return re.sub(f"({'|'.join(fields)})=[^{separator}]*", lambda m:
-                  f"{m.group().split('=')[0]}={redaction}", message)
+        return filter_datum(self.fields, self.REDACTION,
+                            super().format(record), self.SEPARATOR)
