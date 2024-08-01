@@ -5,8 +5,10 @@ unction called filter_datum that returns the log message obfuscated
 import re
 from typing import List
 import logging
+import os
+import mysql.connetor
 
-PII_FIELDS = ("name", "email", "phone", "ssn", "password")
+PII_FIELDS = ('email', 'password', 'ssn', 'phone', 'address')
 
 
 def filter_datum(fields: List[str], redaction: str,
@@ -42,3 +44,19 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(RedactingFormatter(fields=PII_FIELDS))
     logger.addHandler(handler)
     return logger
+
+
+def get_db():
+    username = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
+    host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+    database = os.getenv('PERSONAL_DATA_DB_NAME')
+
+    connection = mysql.connector.connect(
+        user=username,
+        password=password,
+        host=host,
+        database=database
+    )
+
+    return connection
