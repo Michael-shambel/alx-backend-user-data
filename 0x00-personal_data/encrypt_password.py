@@ -4,13 +4,14 @@ Module for password hashing.
 """
 import bcrypt
 
+
 def hash_password(password: str) -> bytes:
     """
     Hashes a password using bcrypt.
-    
+
     Args:
         password (str): The password to hash.
-        
+
     Returns:
         bytes: The salted, hashed password.
     """
