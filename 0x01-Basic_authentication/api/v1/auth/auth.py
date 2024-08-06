@@ -15,14 +15,21 @@ class Auth:
         """
         Determine if authentication is required for the given path.
         """
+        if path is None or excluded_paths is None or excluded_paths == []:
+            return True
+
+        normalize_path = path.rstrip('/')
+
+        for excluded_path in excluded_paths:
+            normalize_excluded_path = excluded_path.rstrip('/')
+            if normalize_path == normalize_excluded_path:
+                return True
         return False
 
     def authorization_header(self, request=None) -> str:
         """
         Retrieve the authorization header from the request.
         """
-        # if request and request.headers.get('Authorization'):
-        #     return request.headers.get('Authorization')
         return None
 
     def current_user(self, request=None) -> TypeVar('User'):
