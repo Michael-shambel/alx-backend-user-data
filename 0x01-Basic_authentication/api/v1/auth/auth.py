@@ -7,6 +7,9 @@ from typing import List, TypeVar
 
 
 class Auth:
+    """
+    a class that choose api authontication
+    """
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
@@ -18,8 +21,8 @@ class Auth:
         """
         Retrieve the authorization header from the request.
         """
-        if request and request.headers.get('Authorization'):
-            return request.headers.get('Authorization')
+        # if request and request.headers.get('Authorization'):
+        #     return request.headers.get('Authorization')
         return None
 
     def current_user(self, request=None) -> TypeVar('User'):
