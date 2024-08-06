@@ -22,7 +22,7 @@ def not_found(error) -> str:
 
 
 @app.errorhandler(401)
-def unautorized(error):
+def unautorized(error) -> str:
     """
     unautorized error handler
     """
