@@ -19,6 +19,10 @@ auth_type = os.getenv('AUTH_TYPE')
 
 @app.before_request
 def before_request():
+    """
+    Now the biggest piece is the filtering of each request.
+    For that you will use the Flask method before_request
+    """
     if auth is None:
         return
     excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/',
