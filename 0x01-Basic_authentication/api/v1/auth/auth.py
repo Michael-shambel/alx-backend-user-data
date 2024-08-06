@@ -2,6 +2,7 @@
 """
 create a class to manage the API authentication
 """
+import fnmatch
 from flask import request
 from typing import List, TypeVar
 
@@ -17,6 +18,13 @@ class Auth:
         """
         if path is None or excluded_paths is None or excluded_paths == []:
             return True
+        
+        if path[-1] != '/':
+            path += '/'
+        for excluded_path in excluded_paths:
+            if fnmatch.fnmatch(path, excluded_path if excluded_path[-1] == '/' else excluded_path + '/'):
+                return False
+
 
         normalize_path = path.rstrip('/')
 
