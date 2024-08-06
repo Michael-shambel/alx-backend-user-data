@@ -19,7 +19,7 @@ auth_type = os.getenv('AUTH_TYPE')
 
 if auth_type == 'BasicAuth':
     auth = BasicAuth()
-else:
+if auth_type == 'Auth':
     auth = Auth()
 
 
