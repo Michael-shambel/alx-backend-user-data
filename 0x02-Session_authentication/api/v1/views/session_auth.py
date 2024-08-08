@@ -36,3 +36,16 @@ def login():
     response.set_cookie(key=session_id, value=session_id, path='/')
 
     return response
+
+
+@session_auth_views.route('/auth_session/logout/',
+                          methods=['DELETE'], strict_slashes=False)
+def logout():
+    """
+    DELETE /api/v1/auth_session/logout:
+        - Logout the current user
+    """
+    if not auth.destroy_session(request):
+        abort(404)
+
+    return jsonify({})
