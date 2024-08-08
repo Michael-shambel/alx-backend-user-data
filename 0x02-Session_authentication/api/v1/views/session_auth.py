@@ -2,7 +2,7 @@
 """
 Route module for session authentication
 """
-from flask import Flask, Blueprint, request, jsonify
+from flask import Flask, Blueprint, request, jsonify, abort
 from api.v1.app import auth
 from models.user import User
 
