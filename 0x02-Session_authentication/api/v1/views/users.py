@@ -53,7 +53,8 @@ def delete_user(user_id: str = None) -> str:
     user = User.get(user_id)
     if user is None:
         abort(404)
-    return jsonify(user.to_json())
+    user.remove()
+    return jsonify({}), 200
 
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
