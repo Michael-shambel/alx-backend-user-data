@@ -2,10 +2,10 @@
 """
 Basic auth
 """
+import base64
 from typing import TypeVar
 from api.v1.auth.auth import Auth
 from models.user import User
-import base64
 
 
 class BasicAuth(Auth):
