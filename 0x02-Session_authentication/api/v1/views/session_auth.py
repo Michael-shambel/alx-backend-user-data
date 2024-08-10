@@ -9,8 +9,8 @@ from api.v1.views import app_views
 from flask import abort, jsonify, request
 
 
-@session_auth_views.route('/auth_session/login/',
-                          methods=['POST'], strict_slashes=False)
+@app_views.route('/auth_session/login/',
+                 methods=['POST'], strict_slashes=False)
 def login():
     """
     POST /api/v1/auth_session/login:
