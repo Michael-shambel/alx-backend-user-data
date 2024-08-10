@@ -86,28 +86,8 @@ def current_user(self, request=None) -> TypeVar('User'):
     """
     overloads Auth and retrieves the User instance for a request
     """
-    # if request is None:
-    #     return None
-    authorization_header = self.authorization_header(request)
-    # if authorization_header is None:
-    #     return None
-
-    base64_authorization_header = (
-        self.extract_base64_authorization_header(authorization_header)
-        )
-    # if base64_authorization_header is None:
-    #     return None
-
-    decoded_base64_authorization_header = (
-        self.decode_base64_authorization_header(base64_authorization_header)
-        )
-    # if decoded_base64_authorization_header is None:
-    #     return None
-
-    user_creds = self.extract_user_credentials(
-        decoded_base64_authorization_header)
-    # if user_email is None or user_pwd is None:
-    #     return None
-
-    user = self.user_object_from_credentials(*user_creds)
-    return user
+    header = self.authorization_header(request)
+    b64header = self.extract_base64_authorization_header(header)
+    decoded = self.decode_base64_authorization_header(b64header)
+    user_creds = self.extract_user_credentials(decoded)
+    return self.user_object_from_credentials(*user_creds)
