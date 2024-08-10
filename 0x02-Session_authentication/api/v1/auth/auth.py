@@ -2,7 +2,6 @@
 """
 create a class to manage the API authentication
 """
-import os
 import fnmatch
 from flask import request
 from typing import List, TypeVar
@@ -53,12 +52,3 @@ class Auth:
         Retrieve the current user from the request.
         """
         return None
-
-    def session_cookie(self, request=None) -> str:
-        """
-        Retrieve the session cookie from the request.
-        """
-        if request is None:
-            return None
-        cookie_name = os.getenv('SESSION_NAME', '_my_session_id')
-        return request.cookies.get(cookie_name, None)
