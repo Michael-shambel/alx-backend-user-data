@@ -2,6 +2,7 @@
 """
 Basic Authentication module
 """
+from models.user import User
 from api.v1.auth.auth import Auth
 from base64 import b64decode
 from typing import Tuple, TypeVar
@@ -69,7 +70,6 @@ class BasicAuth(Auth):
         if user_pwd is None or type(user_pwd) is not str:
             return None
 
-        from models.user import User
         try:
             users = User.search({'email': user_email})
 
@@ -86,10 +86,10 @@ class BasicAuth(Auth):
     def current_user(self, request=None) -> TypeVar('User'):
         """overloads Auth and retrieves the User
         instance for a request:"""
-        authorization = self.authorization_header(request)
-        bs64token = self.\
-            extract_base64_authorization_header(authorization)
-        credentials = self.\
-            decode_base64_authorization_header(bs64token)
-        email, password = self.extract_user_credentials(credentials)
+        header_authorization = self.authorization_header(request)
+        header_bs64token = self.\
+            extract_base64_authorization_header(header_authorization)
+        header_credentials = self.\
+            decode_base64_authorization_header(header_bs64token)
+        email, password = self.extract_user_credentials(header_credentials)
         return self.user_object_from_credentials(email, password)
