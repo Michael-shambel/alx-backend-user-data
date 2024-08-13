@@ -2,10 +2,21 @@
 """
 hash password return salted hash
 """
+import uuid
 import bcrypt
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
+
+
+def _generate_uuid() -> str:
+    """
+    Generate a unique identifier.
+
+    Returns:
+    - A string representing the unique identifier.
+    """
+    return str(uuid.uuid4())
 
 
 def _hash_password(password: str) -> bytes:
