@@ -48,10 +48,25 @@ class DB:
         """
         find user by aby keyword
         """
-        if not kwargs or any(x not in VALID_FIELDS for x in kwargs):
-            raise InvalidRequestError
-        session = self._session
         try:
-            return session.query(User).filter_by(**kwargs).one()
-        except Exception:
+            user = self._session.query(User).filter_by(**kwargs).one()
+            return user
+        except NoResultFound:
             raise NoResultFound
+        except InvalidRequestError:
+            raise InvalidRequestError
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        update user by id
+        """
+        try:
+            user = self.find_user_by(id=user_id)
+        except NoResultFound:
+            raise ValueError
+
+        for key, value in kwargs.items():
+            if not hasattr(user, key):
+                raise ValueError
+            setattr(user, key, value)
+        self._session.commit()
