@@ -37,6 +37,8 @@ class DB:
         """
         Add a new user to the database
         """
+        if not email or not hashed_password:
+            return
         new_user = User(email=email, hashed_password=hashed_password)
         self._session.add(new_user)
         self._session.commit()
