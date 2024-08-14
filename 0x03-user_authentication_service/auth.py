@@ -20,7 +20,7 @@ def _generate_uuid() -> str:
     return str(uuid.uuid4())
 
 
-def _hash_password(password: str) -> str:
+def _hash_password(password: str) -> bytes:
     """
     Hash a password using bcrypt.
 
@@ -30,7 +30,10 @@ def _hash_password(password: str) -> str:
     Returns:
     - A bytes object containing the hashed password.
     """
-    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    password_bytes = password.encode('utf-8')
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password_bytes, salt)
+    return hashed
 
 
 class Auth:
@@ -52,15 +55,13 @@ class Auth:
             if it is in the db error
         """
         try:
-            # find the user with the given email
             self._db.find_user_by(email=email)
-        except NoResultFound:
-            # add user to database
-            return self._db.add_user(email, _hash_password(password))
+            raise ValueError(f"User {email} already exists")
 
-        else:
-            # if user already exists, throw error
-            raise ValueError('User {} already exists'.format(email))
+        except NoResultFound:
+            hashed_password = _hash_password(password)
+            user = self._db.add_user(email, hashed_password)
+            return user
 
     def valid_login(self, email: str, password: str) -> bool:
         """
