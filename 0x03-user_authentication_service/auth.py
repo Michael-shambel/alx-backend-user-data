@@ -100,7 +100,11 @@ class Auth:
     def get_user_from_session_id(self, session_id: str) -> Optional[User]:
         """
         Get a user from a session ID.
-
+        args:
+            session_id: session id of the user
+        returns:
+            user object if the session id is valid
+            None otherwise
         """
         if session_id is None:
             return None
@@ -112,6 +116,11 @@ class Auth:
 
     def destroy_session(self, user_id: int) -> None:
         """
+        Destroy a session.
+        args:
+            user_id: id of the user
+        returns:
+            None
         """
         if user_id is None:
             return None
