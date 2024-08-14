@@ -15,6 +15,7 @@ app = Flask(__name__)
 def home():
     """
     handle get request to the url
+    acts as the home page
     """
     return jsonify(message="Bienvenue")
 
@@ -23,6 +24,7 @@ def home():
 def register_user():
     """
     handle post request to the url
+    it handles to regester a new user
     """
     email = request.form.get('email')
     password = request.form.get('password')
@@ -36,6 +38,11 @@ def register_user():
 @app.route('/sessions', methods=['POST'])
 def login():
     """
+    handle POST request asked by the user
+    the code request email and password from url and check...
+    ....if the given form is valid which is present in the database...
+    ....if it is valid then it will create a session id.....
+    ....and return the session id to the user
     """
     email = request.form.get('email')
     password = request.form.get('password')
