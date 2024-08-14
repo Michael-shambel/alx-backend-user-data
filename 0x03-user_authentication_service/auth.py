@@ -55,13 +55,12 @@ class Auth:
             if it is in the db error
         """
         try:
-            existing_user = self._db.find_user_by(email=email)
-            if existing_user:
-                raise ValueError(f"User {email} already exists")
+            self._db.find_user_by(email=email)
+            raise ValueError(f"User {email} already exists")
+
         except NoResultFound:
-            hash_pwd = _hash_password(password)
-            user = self._db.add_user(email=email,
-                                     hashed_password=hash_pwd.decode('utf-8'))
+            hashed_password = _hash_password(password)
+            user = self._db.add_user(email, hashed_password)
             return user
 
     def valid_login(self, email: str, password: str) -> bool:
