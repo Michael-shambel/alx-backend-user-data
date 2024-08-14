@@ -74,6 +74,9 @@ def logout():
 @app.route('/profile', methods=['GET'])
 def profile():
     """
+    handle GET request asked by the user
+    the code request session id from the cookie
+    and return  the email of the user
     """
     session_id = request.cookies.get('session_id')
     if not session_id:
