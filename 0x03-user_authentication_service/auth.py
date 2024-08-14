@@ -130,3 +130,20 @@ class Auth:
             self._db._session.commit()
         except NoResultFound:
             pass
+
+    def get_reset_password_token(self, email: str) -> str:
+        """
+        Generate a reset password token.
+        args:
+            email: email of the user
+        returns:
+            reset token of the user
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            reset_token = _generate_uuid()
+            user.reset_token = reset_token
+            self._db._session.commit()
+            return reset_token
+        except ValueError:
+            raise ValueError
