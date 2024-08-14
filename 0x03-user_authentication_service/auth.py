@@ -8,7 +8,6 @@ import bcrypt
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy.exc import InvalidRequestError
 
 
 def _generate_uuid() -> str:
@@ -99,6 +98,7 @@ class Auth:
     def get_user_from_session_id(self, session_id: str) -> Optional[User]:
         """
         Get a user from a session ID.
+
         """
         if session_id is None:
             return None
