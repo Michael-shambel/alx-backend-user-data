@@ -75,7 +75,7 @@ def logout():
 def profile():
     """
     """
-    session_id = request.form.get('session_id')
+    session_id = request.cookies.get('session_id')
     try:
         user = AUTH.get_user_by_session_id(session_id)
         return jsonify({"email": user.email}), 200
