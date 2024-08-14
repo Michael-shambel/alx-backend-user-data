@@ -44,9 +44,15 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    def register_user(self, email: str, password: str) -> User:
+    def register_user(self, email: str, password: str) -> Optional[User]:
         """
         Register a user in the database.
+        args:
+            email: email of the user
+            password: password of the user
+        returns:
+            if it is not in db user object
+            if it is in the db error
         """
         try:
             self._db.find_user_by(email=email)
