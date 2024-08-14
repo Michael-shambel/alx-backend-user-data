@@ -57,6 +57,10 @@ class DB:
     def find_user_by(self, **kwargs) -> User:
         """
         find user by aby keyword
+        args:
+            **kwargs: keyword arguments
+        return:
+            User: the user object
         """
         try:
             user = self._session.query(User).filter_by(**kwargs).one()
@@ -69,6 +73,11 @@ class DB:
     def update_user(self, user_id: int, **kwargs) -> None:
         """
         update user by id
+        args:
+            user_id: user id
+            **kwargs: keyword arguments
+        return:
+            None
         """
         try:
 
