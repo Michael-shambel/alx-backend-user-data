@@ -8,8 +8,10 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
-
 from user import Base, User
+
+VALID_FIELDS = ['id', 'email', 'hashed_password', 'session_id',
+                'reset_token']
 
 
 class DB:
@@ -62,13 +64,13 @@ class DB:
         return:
             User: the user object
         """
-        try:
-            user = self._session.query(User).filter_by(**kwargs).one()
-            return user
-        except NoResultFound:
-            raise NoResultFound
-        except InvalidRequestError:
+        if not kwargs or any(x not in VALID_FIELDS for x in kwargs):
             raise InvalidRequestError
+        session = self._session
+        try:
+            return session.query(User).filter_by(**kwargs).one()
+        except Exception:
+            raise NoResultFound
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """
