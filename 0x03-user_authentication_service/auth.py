@@ -65,6 +65,8 @@ class Auth:
 
         hashed_password = _hash_password(password)
         user = self._db.add_user(email, hashed_password)
+        if user is None:
+            raise ValueError("Could not create user")
         return user
 
     def valid_login(self, email: str, password: str) -> bool:
