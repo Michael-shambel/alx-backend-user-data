@@ -20,7 +20,7 @@ def _generate_uuid() -> str:
     return str(uuid.uuid4())
 
 
-def _hash_password(password: str) -> bytes:
+def _hash_password(password: str) -> str:
     """
     Hash a password using bcrypt.
 
