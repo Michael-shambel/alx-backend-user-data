@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-hash password return salted hash
+Authontication module.
 """
 from typing import Optional
 import uuid
