@@ -8,7 +8,6 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy.exc import SQLAlchemyError
 
 from user import Base, User
 
@@ -43,9 +42,10 @@ class DB:
             self._session.add(new_user)
             self._session.commit()
             return new_user
-        except SQLAlchemyError:
+        except Exception:
             self._session.rollback()
-            raise
+            new_user = None
+            return new_user
 
     def find_user_by(self, **kwargs) -> User:
         """
