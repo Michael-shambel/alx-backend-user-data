@@ -60,13 +60,9 @@ class Auth:
             raise ValueError(f"User {email} already exists")
         except NoResultFound:
             pass
-        except InvalidRequestError:
-            raise InvalidRequestError
 
         hashed_password = _hash_password(password)
         user = self._db.add_user(email, hashed_password)
-        if user is None:
-            raise InvalidRequestError
         return user
 
     def valid_login(self, email: str, password: str) -> bool:
@@ -88,6 +84,10 @@ class Auth:
     def create_session(self, email: str) -> str:
         """
         Create a new session for a user.
+        args:
+            email: email of the user
+        returns:
+            session_id of the user
         """
         try:
             user = self._db.find_user_by(email=email)
