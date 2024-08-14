@@ -2,12 +2,12 @@
 """
 Authontication module.
 """
-from typing import Optional
-import uuid
 import bcrypt
 from db import DB
-from user import User
 from sqlalchemy.orm.exc import NoResultFound
+from typing import Optional
+from user import User
+import uuid
 
 
 def _generate_uuid() -> str:
