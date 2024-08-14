@@ -94,11 +94,8 @@ class Auth:
             self._db._session.commit()
             return session_id
         except NoResultFound:
-            return None
-        except Exception:
             self._db._session.rollback()
             return None
-
 
     def get_user_from_session_id(self, session_id: str) -> Optional[User]:
         """
