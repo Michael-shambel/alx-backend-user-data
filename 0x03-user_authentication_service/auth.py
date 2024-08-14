@@ -37,7 +37,8 @@ def _hash_password(password: str) -> bytes:
 
 
 class Auth:
-    """Auth class to interact with the authentication database.
+    """
+    Auth class to interact with the authentication database.
     """
 
     def __init__(self):
@@ -48,7 +49,7 @@ class Auth:
         Register a user in the database.
         """
         try:
-            exising_user = self._db.find_user_by(email=email)
+            self._db.find_user_by(email=email)
             raise ValueError(f"User {email} already exists")
         except NoResultFound:
             hashed_password = _hash_password(password)
