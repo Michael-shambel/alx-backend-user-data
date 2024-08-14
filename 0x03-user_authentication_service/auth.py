@@ -30,10 +30,7 @@ def _hash_password(password: str) -> str:
     Returns:
     - A bytes object containing the hashed password.
     """
-    password_bytes = password.encode('utf-8')
-    salt = bcrypt.gensalt()
-    hashed = bcrypt.hashpw(password_bytes, salt)
-    return hashed
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
 
 class Auth:
@@ -60,7 +57,6 @@ class Auth:
 
         except NoResultFound:
             hashed_password = _hash_password(password)
-            hashed_password = hashed_password.decode('utf-8')
             user = self._db.add_user(email, hashed_password)
             return user
 
