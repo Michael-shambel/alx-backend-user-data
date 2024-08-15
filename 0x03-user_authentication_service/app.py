@@ -71,7 +71,7 @@ def logout():
         abort(403)
 
 
-@app.route('/profile', methods=['GET'])
+@app.route('/profile', methods=['GET'], strict_slashes=False)
 def profile() -> str:
     """
     handle GET request asked by the user
