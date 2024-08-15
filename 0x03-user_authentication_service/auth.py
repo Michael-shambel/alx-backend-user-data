@@ -162,5 +162,5 @@ class Auth:
             user.hashed_password = _hash_password(password)
             user.reset_token = None
             self._db._session.commit()
-        except ValueError:
+        except NoResultFound:
             raise ValueError
