@@ -79,8 +79,6 @@ def profile() -> str:
     and return  the email of the user
     """
     session_id = request.cookies.get('session_id')
-    if not session_id:
-        abort(403)
     user = AUTH.get_user_by_session_id(session_id)
     if user is None:
         abort(403)
